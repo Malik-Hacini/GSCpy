@@ -181,8 +181,6 @@ def build_dataset(save=False,name=None,path=None):
     collector.ax.set_yticks([])  
 
     
-    mng = plt.get_current_fig_manager()
-    mng.window.state('zoomed')
     plt.show()
     
     data,labels=collector.generate_data_and_labels()

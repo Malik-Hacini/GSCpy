@@ -1,3 +1,4 @@
+
 This is a package for performing Spectral Clustering.
 
  It works a near-fully unsupervised way : the only required information is the number of clusters .
@@ -12,11 +13,11 @@ Interacting with the package is done trough the GSC class, representing a GSC mo
 * Cluster your data using the fit method of the class
 * Retrieve the clustering using the labels attribute
 * Get more information on the clustering by using the available instance attributes (cluster centers, eigenvalues of the graph laplacian, adjacency matrix, Calinski-Harabasz index)
-* Evaluate the clustering using the nmi method.
+* Evaluate the performance of the clustering using the nmi method.
 
 To help you manage your datasets, GSCpy includes a file manager allowing to easily load and save datasets with their labels.The package also includes an interactive 2D dataset builder, powered by matplotlib.
 
-GSCpy is entirely written in Python and requires the following packages to work :
+GSCpy is entirely written in Python and requires the following libraries to run correctly :
 
 * NumPy
 * Matplotlib

@@ -3,6 +3,7 @@ setup.py
 GSCpy.egg-info/PKG-INFO
 GSCpy.egg-info/SOURCES.txt
 GSCpy.egg-info/dependency_links.txt
+GSCpy.egg-info/requires.txt
 GSCpy.egg-info/top_level.txt
 gscpy/GSC.py
 gscpy/__init__.py
