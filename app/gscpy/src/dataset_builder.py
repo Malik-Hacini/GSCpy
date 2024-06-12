@@ -1,11 +1,13 @@
-from utils.data_files_managing import save_data_n_labels
+from utils.file_manager import save_data_and_labels
 from sys import setrecursionlimit
 import matplotlib.pyplot as plt
 
 setrecursionlimit(10000000)
 
 class PointCollector:
-    def __init__(self):
+    """An interactive 2D dataset builder, running on matplotlib."""
+    def __init__(self,save):
+        self.save=save
         self.points = {color: [] for color in self.color_map.values()}
         self.current_color = 'blue'
         self.is_drawing = False
@@ -28,7 +30,8 @@ class PointCollector:
             plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=color, markersize=6, label=f'{key}')
             for key, color in self.color_map.items()
         ]
-        self.save_patch = plt.Line2D([0], [0], linestyle="None", marker="", color='black', label="Press '0' to save")
+        if self.save:
+            self.save_patch = plt.Line2D([0], [0], linestyle="None", marker="", color='black', label="Press '0' to save")
         self.erase_patch = plt.Line2D([0], [0], linestyle="None", marker="", color='black', label="Press 'E' to enable eraser")
         self.erase_all_patch = plt.Line2D([0], [0], linestyle="None", marker="", color='black', label="Press 'R' to reset")
         self.counter_patch = plt.Line2D([0], [0], linestyle="None", marker="", color='black', label="Press 'C' to enable counter")
@@ -37,7 +40,12 @@ class PointCollector:
         self.legend1 = self.fig.legend(handles=self.legend_patches, loc='upper left', bbox_to_anchor=(0.1, 0.95), markerscale=1, ncol=len(self.legend_patches))
 
         # Place the save and erase instruction legend outside the plot at the top right of the figure
-        self.legend2 = self.fig.legend(handles=[self.save_patch, self.erase_patch, self.erase_all_patch, self.counter_patch], loc='upper right', bbox_to_anchor=(0.9, 1), frameon=False)
+        if self.save:
+            feature_handles=[self.save_patch, self.erase_patch, self.erase_all_patch, self.counter_patch]
+        else:
+            feature_handles=[self.erase_patch, self.erase_all_patch, self.counter_patch]
+
+        self.legend2 = self.fig.legend(handles=feature_handles, loc='upper right', bbox_to_anchor=(0.9, 1), frameon=False)
         self.erase_label = self.legend2.get_texts()[1]
         self.erase_all_label = self.legend2.get_texts()[2]
         self.counter_label = self.legend2.get_texts()[3]
@@ -136,8 +144,19 @@ class PointCollector:
                 self.legend3 = None
         self.fig.canvas.draw()
 
-def build_dataset(name,path=''):
-    collector = PointCollector()
+def build_dataset(save=False,name=None,path=None):
+    """Runs an interactive 2D dataset builder, running on matplotlib.
+     Inputs :
+        save (bool, optional) : Set to True to save the dataset externally, in two files : name_data and name_labels.
+         These files can then be loaded using gscpy.file_manager.load_data_and_labels . Default = False 
+        name (str): If save is True, the name of your dataset, without file extension. Example: 'myset'.
+        path (str): If save is True, the path to save the dataset. Example : 'Datasets/2D'.
+        
+     Returns :
+        data (ndarray) :The points drawn.
+        labels (ndarray) : The labels assigned to each point.
+        """
+    collector = PointCollector(save)
 
     collector.fig.canvas.mpl_connect('button_press_event', collector.on_press)
     collector.fig.canvas.mpl_connect('button_release_event', collector.on_release)
@@ -146,9 +165,9 @@ def build_dataset(name,path=''):
     def on_key(event):
         if event.key in collector.color_map:
             collector.change_color(event.key)
-        elif event.key == '0':
+        elif event.key == '0' and save:
             data, labels = collector.generate_data_and_labels()
-            save_data_n_labels(data, labels, name,path)
+            save_data_and_labels(data, labels, name,path)
         elif event.key.lower() == 'e':
             collector.toggle_eraser()
         elif event.key.lower() == 'r':
@@ -158,13 +177,14 @@ def build_dataset(name,path=''):
 
     collector.fig.canvas.mpl_connect('key_press_event', on_key)
 
-    # Adjust the limits to achieve a 3:1 x/y ratio in measurements
-    collector.ax.set_xlim(0, 6)
-    collector.ax.set_ylim(0, 2)
-    collector.ax.set_xticks([])  # Hide x-axis ticks
-    collector.ax.set_yticks([])  # Hide y-axis ticks
+    collector.ax.set_xticks([])  
+    collector.ax.set_yticks([])  
 
+    
     mng = plt.get_current_fig_manager()
     mng.window.state('zoomed')
     plt.show()
-
+    
+    data,labels=collector.generate_data_and_labels()
+    return data,labels
+    

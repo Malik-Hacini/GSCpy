@@ -1,5 +1,9 @@
-import gscpy
+from GSC import*
+from utils.file_manager import *
+from dataset_builder import*
 
-data,labels=gscpy.data_files_managing.load_data_n_labels('test_package')
-labels_spectral=gscpy.spectral_clustering(data,n_clusters=2,true_labels=labels)
-print(labels,labels_spectral)
+data,labels=build_dataset(save=True,name='wsh',path='Dossier/Dossier2')
+model=GSC(2)
+model.fit(data,true_labels=labels)
+print(model.cluster_centers, model.eigenvals, model.adj_matrix, model.ch_index)
+save_data_and_labels(data,model.labels,'testtt')
