@@ -6,15 +6,14 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='GSCpy',
-    version='1.0.0',
+    version='0.1.0',
     description='Generalized Spectral Clustering in Python',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Malik Hacini',
     author_email='mhacini.pro@gmail.com',
     url='https://github.com/Malik-Hacini/GSCpy',  # Update this with your project's URL
-    packages=find_packages(where='app'),
-    package_dir={'': 'app'},
+    packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',

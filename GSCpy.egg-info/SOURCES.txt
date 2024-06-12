@@ -1,0 +1,15 @@
+README.md
+setup.py
+GSCpy.egg-info/PKG-INFO
+GSCpy.egg-info/SOURCES.txt
+GSCpy.egg-info/dependency_links.txt
+GSCpy.egg-info/top_level.txt
+gscpy/GSC.py
+gscpy/__init__.py
+gscpy/dataset_builder.py
+gscpy/utils/__init__.py
+gscpy/utils/error_handling.py
+gscpy/utils/file_manager.py
+gscpy/utils/graphs.py
+gscpy/utils/labels_ordering.py
+gscpy/utils/spectral_clustering.py
