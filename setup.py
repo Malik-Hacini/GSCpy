@@ -6,7 +6,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name='GSCpy',
-    version='0.1.2',
+    version='1.0',
     description='Generalized Spectral Clustering in Python',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -20,5 +20,5 @@ setup(
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.6',
-    install_requires=['numpy','matplotlib','scipy','sklearn']
+    install_requires=['numpy','matplotlib','scipy','scikit-learn']
 )
