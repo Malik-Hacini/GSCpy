@@ -1,3 +1,5 @@
+# GSCpy
+
 This is a package for performing Spectral Clustering.
 
  It works a near-fully unsupervised way : the only required information is the number of clusters .
@@ -5,6 +7,8 @@ This is a package for performing Spectral Clustering.
 The clustering is done using the Generalized Spectral Clustering (GSC) framework developped by Jonckheere et al. in [arXiv:2203.03221](https://arxiv.org/abs/2203.03221).  It has been shown experimentally that this framework regularly outperforms classical spectral clustering for synthetic and real datasets.
 
 Classical spectral clustering can also be performed by tweaking the parameters, as the clustering algorithm used is fully customizable.
+
+## Usage
 
 Interacting with the package is done trough the GSC class, representing a GSC model. To use :
 
@@ -16,11 +20,21 @@ Interacting with the package is done trough the GSC class, representing a GSC mo
 
 To help you manage your datasets, GSCpy includes a file manager allowing to easily load and save datasets with their labels.The package also includes an interactive 2D dataset builder, powered by matplotlib.
 
+## Installation
+
 GSCpy is entirely written in Python and requires the following libraries to run correctly :
 
 * NumPy
 * Matplotlib
 * SciPy
 * Scikit-learn
+
+You can install GSCpy and every required library using pip :
+
+```
+pip install GSCpy
+```
+
+Pypi repository of the project : [GSCpy · PyPI](https://pypi.org/project/GSCpy/)
 
 This project was carried out as part of an internship at LAAS-CNRS, Toulouse.
