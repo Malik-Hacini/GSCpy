@@ -1,4 +1,5 @@
 from utils.spectral_clustering import*
+from sklearn.metrics import normalized_mutual_info_score
 
 class GSC:
     """Generalized Spectral Clustering model.
@@ -15,7 +16,9 @@ class GSC:
     ch_index: The Calinski-Harabasz index, a metric for evaluating the quality of the clustering.
     
     Methods : 
-        fit : Clusters a given dataset using the model."""
+        fit : Clusters a given dataset using the model.
+        nmi : NMI score of the clustering
+        """
     def __init__(self,n_clusters,k_neighbors=None,n_eig=None,laplacian='g_rw',
                         g_method='knn',sym_method=None,sigma=1,gsc_params=(1,1,0.99),
                         max_it=10,use_minibatch=True) :
@@ -90,6 +93,17 @@ class GSC:
 
         return None
     
+    def nmi(self,labels_true):
+        """NMI (Normalized mutual information) score of the true labels and the predicted labels. 
+        Can be used as an evaluation metric of the clustering
+        
+        Inputs :
+            labels_true : The true labels.
+        Returns:
+            nmi (float [0,1]) : The NMI score. The higher, the more shared information between the two labels lists."""
+        
+        return normalized_mutual_info_score(labels_true,self.labels)
+
 
 
 

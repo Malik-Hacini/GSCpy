@@ -3,18 +3,18 @@ import time
 import numba
 from numba import  int64, float64, types, deferred_type
 
-@numba.njit
+@numba.njit(parallel=True)
 def full_kernel(N,nodes,similarity):
      matrix=np.zeros((N,N))
-     for i in range(N):
-          for j in range(i+1):
+     for i in numba.prange(N):
+          for j in numba.prange(i+1):
                if j!=i: #No node is connected to itself (no impact on clustering)
                 matrix[i,j]=similarity.gaussian(nodes[i],nodes[j])
                 matrix[j,i]=matrix[i,j]
     
      return matrix + matrix.T
 
-@numba.njit
+@numba.njit(parallel=True)
 def knn(k: int, nodes, similarity):
     """Constructs a k-nearest neighbor graph of the given nodes (n-dimensional points) using the similarity function given.
     
@@ -31,14 +31,14 @@ def knn(k: int, nodes, similarity):
 
     distances=np.zeros((N,N))
     #Calculate distances
-    for i in range(N):
-        for j in range(i+1, N):
+    for i in numba.prange(N):
+        for j in numba.prange(i+1, N):
             distances[i, j] = similarity.gaussian(nodes[i], nodes[j])
     distances=distances+distances.T
 
     
     # Find k-nearest neighbors
-    for i in range(N):
+    for i in numba.prange(N):
         knn_indices = np.argpartition(distances[i], -k)[-k:]
         for j in knn_indices:
             if j != i:
@@ -47,7 +47,7 @@ def knn(k: int, nodes, similarity):
 
     return matrix
 
-@numba.njit
+@numba.njit(parallel=True)
 def knn_gaussian(k: int, N, nodes, similarity):
         """Constructs a k-nearest neighbor graph of the given nodes (n-dimensional points) using the gaussian similarity function.
         The graph is weighted : W(i,j)=0 if j isn't in the k-nearest neighbors of i and W(i,j)=gaussian(i,j) else.
@@ -66,8 +66,8 @@ def knn_gaussian(k: int, N, nodes, similarity):
     
         distances=np.zeros((N,N))
         # Calculate distances
-        for i in range(N):
-            for j in range(i+1, N):
+        for i in numba.prange(N):
+            for j in numba.prange(i+1, N):
                 distances[i, j] = similarity.gaussian(nodes[i], nodes[j])
         
         distances=distances+distances.T
