@@ -1,3 +1,4 @@
+
 # GSCpy
 
 This is a package for performing Spectral Clustering.
@@ -36,5 +37,19 @@ pip install GSCpy
 ```
 
 Pypi repository of the project : [GSCpy · PyPI](https://pypi.org/project/GSCpy/)
+
+### Test
+
+You can test your GSCpy installation using this simple script :
+
+```
+import gscpy
+
+data,labels_true=gscpy.build_dataset(save=True,name='test')
+k=2 #The number of clusters you built
+model=gscpy.GSC(k)
+model.fit(data)
+print('Clustering  NMI score' ,model.nmi(labels_true))
+```
 
 This project was carried out as part of an internship at LAAS-CNRS, Toulouse.
