@@ -1,4 +1,3 @@
 /.venv
 /.vscode
-/.gscpy/__pycache__
-/.gscpy/utils/__pycache__
+__pycache__/

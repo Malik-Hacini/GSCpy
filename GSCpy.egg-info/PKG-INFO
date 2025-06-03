@@ -1,4 +1,4 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.4
 Name: GSCpy
 Version: 1.0.2
 Summary: Generalized Spectral Clustering in Python
@@ -14,7 +14,15 @@ Requires-Dist: numpy
 Requires-Dist: matplotlib
 Requires-Dist: scipy
 Requires-Dist: scikit-learn
-
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
 
 # GSCpy
 
@@ -53,7 +61,7 @@ You can install GSCpy and every required library using pip :
 pip install GSCpy
 ```
 
-Pypi repository of the project : [GSCpy Â· PyPI](https://pypi.org/project/GSCpy/)
+Pypi repository of the project : [GSCpy · PyPI](https://pypi.org/project/GSCpy/)
 
 ### Test
 
@@ -64,9 +72,9 @@ import gscpy
 
 data,labels_true=gscpy.build_dataset(save=True,name='test')
 k=2 #The number of clusters you built
-model=gscpy.GSC(k)
+model=gscpy.GSC(n_clusters=k)
 model.fit(data)
-print('Clustering  NMI score' ,model.nmi(labels_true))
+print('Clustering NMI score :' ,model.nmi(labels_true))
 ```
 
 This project was carried out as part of an internship at LAAS-CNRS, Toulouse.
